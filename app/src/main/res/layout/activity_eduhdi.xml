@@ -204,7 +204,21 @@
                     android:textAppearance="?android:textAppearanceMedium" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="@dimen/padding"
+            android:background="@color/colorAccent"
+            android:includeFontPadding="false"
+            android:padding="@dimen/padding"
+            android:id="@+id/button1"
+            android:text="MAP"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textStyle="bold" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -213,8 +227,10 @@
             android:background="@color/colorAccent"
             android:includeFontPadding="false"
             android:padding="@dimen/padding"
+            android:id="@+id/button2"
             android:text="SUBMIT"
             android:textAppearance="?android:textAppearanceMedium"
             android:textStyle="bold" />
+            </LinearLayout>
     </LinearLayout>
 </ScrollView>

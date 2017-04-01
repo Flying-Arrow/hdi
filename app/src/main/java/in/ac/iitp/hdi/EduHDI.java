@@ -1,11 +1,17 @@
-package in.ac.iitp.hdi.activities;
+package in.ac.iitp.hdi;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
+import android.widget.Toast;
+import android.view.View;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -17,13 +23,17 @@ import java.util.HashMap;
 
 import in.ac.iitp.hdi.R;
 
+import static android.R.attr.x;
+import static android.R.attr.y;
+import static android.R.id.input;
+
 /**
  * Created by anupam(opticod) on 31/3/17.
  */
 public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     private SliderLayout mDemoSlider;
-
+    private double Hdi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +45,28 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
         file_maps.put("Img2", R.mipmap.ic_launcher);
         file_maps.put("Img3", R.mipmap.ic_launcher);
         file_maps.put("Img4", R.mipmap.ic_launcher);
+
+        Button b1, b2;
+        b2=(Button)findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EduHDI.this,"Tap to select your location!",Toast.LENGTH_LONG).show();
+                Hdi = 0.25;
+                Intent in = new Intent(EduHDI.this, Map.class);
+                in.putExtra("HDI", Double.toString(Hdi));
+                in.putExtra("FLAG", "1");
+                startActivity(in);
+            }
+        });
+        b1=(Button)findViewById(R.id.button1);
+        b1.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent in = new Intent(EduHDI.this, Map.class);
+                in.putExtra("FLAG", "0");
+                startActivity(in);
+            }
+        });
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);

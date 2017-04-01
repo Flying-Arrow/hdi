@@ -71,15 +71,14 @@
                     android:textAppearance="?android:textAppearanceMedium" />
 
                 <SeekBar
-                    android:id="@+id/ageInp"
+                    android:id="@+id/ageSlider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="39dp"
                     android:max="120"
                     android:paddingLeft="@dimen/padding"
                     android:paddingRight="@dimen/padding"
-                    android:paddingTop="@dimen/padding"
-                    android:progress="15" />
+                    android:paddingTop="@dimen/padding" />
 
                 <TextView
                     android:id="@+id/ageValue"
@@ -89,12 +88,74 @@
                     android:paddingLeft="@dimen/padding"
                     android:paddingRight="@dimen/padding"
                     android:paddingTop="@dimen/padding"
-                    android:text="15"
+                    android:text="0"
                     android:textAppearance="?android:textAppearanceMedium" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+
         <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginRight="@dimen/padding"
+            android:layout_marginTop="@dimen/padding"
+            card_view:cardBackgroundColor="@color/home_color"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation"
+            card_view:contentPaddingTop="@dimen/cardview_top_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
+                    android:text="Are you currently receiving education?"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupCurrentlyEduc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding">
+
+                    <RadioButton
+                        android:id="@+id/radioGroupCurrentlyEducTrue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:paddingLeft="@dimen/padding"
+                        android:paddingRight="@dimen/padding"
+                        android:text="Y"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/text_color_light" />
+
+                    <RadioButton
+                        android:id="@+id/radioGroupCurrentlyEducFalse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding"
+                        android:checked="false"
+                        android:paddingLeft="@dimen/padding"
+                        android:paddingRight="@dimen/padding"
+                        android:text="N"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/text_color_light" />
+                </RadioGroup>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/groupBTechMtech"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -122,13 +183,13 @@
                     android:textAppearance="?android:textAppearanceMedium" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup1"
+                    android:id="@+id/radioGroupBTechMtech"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding">
 
                     <RadioButton
-                        android:id="@+id/radio0"
+                        android:id="@+id/radioGroupBTechMtechTrue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="false"
@@ -139,7 +200,7 @@
                         android:textColor="@color/text_color_light" />
 
                     <RadioButton
-                        android:id="@+id/radio1"
+                        android:id="@+id/radioGroupBTechMtechFalse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding"
@@ -154,6 +215,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/secPriSchool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -189,8 +251,7 @@
                     android:max="20"
                     android:paddingLeft="@dimen/padding"
                     android:paddingRight="@dimen/padding"
-                    android:paddingTop="@dimen/padding"
-                    android:progress="7" />
+                    android:paddingTop="@dimen/padding" />
 
                 <TextView
                     android:id="@+id/secPriSchoolValue"
@@ -200,12 +261,119 @@
                     android:paddingLeft="@dimen/padding"
                     android:paddingRight="@dimen/padding"
                     android:paddingTop="@dimen/padding"
-                    android:text="7"
+                    android:text="0"
+                    android:textAppearance="?android:textAppearanceMedium" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/moreEdu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/padding"
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginRight="@dimen/padding"
+            android:layout_marginTop="@dimen/padding"
+            card_view:cardBackgroundColor="@color/home_color"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation"
+            card_view:contentPaddingTop="@dimen/cardview_top_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
+                    android:text="How many more do you expect to receive?"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <SeekBar
+                    android:id="@+id/moreEduSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="39dp"
+                    android:max="20"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding" />
+
+                <TextView
+                    android:id="@+id/moreEduValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
+                    android:text="0"
+                    android:textAppearance="?android:textAppearanceMedium" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/guessEdu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/padding"
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginRight="@dimen/padding"
+            android:layout_marginTop="@dimen/padding"
+            card_view:cardBackgroundColor="@color/home_color"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation"
+            card_view:contentPaddingTop="@dimen/cardview_top_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
+                    android:text="How many years of schooling that a child of school entrance age can expect to receive?"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <SeekBar
+                    android:id="@+id/guessEduSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="39dp"
+                    android:max="20"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding" />
+
+                <TextView
+                    android:id="@+id/guessEduValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
+                    android:text="0"
                     android:textAppearance="?android:textAppearanceMedium" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <Button
+            android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

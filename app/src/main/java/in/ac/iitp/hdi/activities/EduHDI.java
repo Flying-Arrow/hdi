@@ -2,7 +2,8 @@ package in.ac.iitp.hdi.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +14,9 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import in.ac.iitp.hdi.R;
 
@@ -22,11 +25,30 @@ import in.ac.iitp.hdi.R;
  */
 public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
+    boolean currentlyRecvEdu;
+    boolean isCompletedMaster;
+    int yearsPriSecSchool;
+    int moreEdu;
+    int guessChildEdu;
+    List<RadioButton> iRadGroupCurrentlyEduList = new ArrayList<RadioButton>();
+    List<RadioButton> iRadGroupCompletedMaster = new ArrayList<RadioButton>();
     private SliderLayout mDemoSlider;
+    private int MYS;
+    private int EYS;
+    private int age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.MYS = 0;
+        this.EYS = 0;
+        this.age = 0;
+        this.currentlyRecvEdu = false;
+        this.isCompletedMaster = true;
+        this.yearsPriSecSchool = 0;
+        this.moreEdu = 0;
+        this.guessChildEdu = 0;
+
         setContentView(R.layout.activity_eduhdi);
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
@@ -56,15 +78,22 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
 
-        SeekBar seekBarAge = (SeekBar) findViewById(R.id.ageInp);
+        SeekBar seekBarAge = (SeekBar) findViewById(R.id.ageSlider);
+        SeekBar seekBarPriSecSchool = (SeekBar) findViewById(R.id.secPriSchoolSlider);
+        SeekBar seekBarMoreEdu = (SeekBar) findViewById(R.id.moreEduSlider);
+        SeekBar seekBarGuessEdu = (SeekBar) findViewById(R.id.guessEduSlider);
+
         final TextView ageValue = (TextView) findViewById(R.id.ageValue);
+        final TextView priSecValue = (TextView) findViewById(R.id.secPriSchoolValue);
+        final TextView moreEduValue = (TextView) findViewById(R.id.moreEduValue);
+        final TextView guessEduValue = (TextView) findViewById(R.id.guessEduValue);
 
         seekBarAge.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
                 ageValue.setText(String.valueOf(progress));
+                age = progress;
             }
 
             @Override
@@ -76,15 +105,12 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
             }
         });
 
-        SeekBar seekBarSchool = (SeekBar) findViewById(R.id.secPriSchoolSlider);
-        final TextView secPriSchoolValue = (TextView) findViewById(R.id.secPriSchoolValue);
-
-        seekBarSchool.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
+        seekBarPriSecSchool.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                secPriSchoolValue.setText(String.valueOf(progress));
+                priSecValue.setText(String.valueOf(progress));
+                yearsPriSecSchool = progress;
             }
 
             @Override
@@ -93,10 +119,98 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        seekBarMoreEdu.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                moreEduValue.setText(String.valueOf(progress));
+                moreEdu = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        seekBarGuessEdu.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                guessEduValue.setText(String.valueOf(progress));
+                guessChildEdu = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        RadioButton iRad0 = (RadioButton) findViewById(R.id.radioGroupCurrentlyEducTrue);
+        RadioButton iRad1 = (RadioButton) findViewById(R.id.radioGroupCurrentlyEducFalse);
+
+        iRadGroupCurrentlyEduList.add(iRad0);
+        iRadGroupCurrentlyEduList.add(iRad1);
+
+        RadioButton iRad2 = (RadioButton) findViewById(R.id.radioGroupBTechMtechTrue);
+        RadioButton iRad3 = (RadioButton) findViewById(R.id.radioGroupBTechMtechFalse);
+
+        iRadGroupCompletedMaster.add(iRad2);
+        iRadGroupCompletedMaster.add(iRad3);
+
+        findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentlyRecvEdu = getSelectedAnswer(iRadGroupCurrentlyEduList) == 0;
+                isCompletedMaster = getSelectedAnswer(iRadGroupCompletedMaster) == 0;
+                if (currentlyRecvEdu) {
+                    MYS = yearsPriSecSchool;
+                }
+                if (isCompletedMaster && age > 25) {
+                    MYS = 15;
+                }
+                if (guessChildEdu != 0 && !currentlyRecvEdu) {
+                    MYS = guessChildEdu;
+                }
+                MYS = Math.min(15, MYS);
+
+                if (currentlyRecvEdu) {
+                    EYS = yearsPriSecSchool;
+                } else {
+                    EYS = guessChildEdu;
+                }
+                if (isCompletedMaster && age > 25) {
+                    EYS += 3;
+                }
+                if (moreEdu != 0 && age > 25) {
+                    EYS += moreEdu;
+                }
+                EYS = Math.min(18, EYS);
+
+                Toast.makeText(getApplicationContext(), "MYS: " + MYS + "; EYS: " + EYS, Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    public int getSelectedAnswer(List<RadioButton> iRadGroupList) {
+        int selected = -1;
+        for (int i = 0; i < iRadGroupList.size(); i++) {
+            if (iRadGroupList.get(i).isChecked()) {
+                return i;
+            }
+        }
+        return selected;
+    }
 
     @Override
     protected void onStop() {
@@ -106,7 +220,6 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(this, slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -115,7 +228,6 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
 
     @Override
     public void onPageSelected(int position) {
-        Log.d("Slider Demo", "Page Changed: " + position);
     }
 
     @Override

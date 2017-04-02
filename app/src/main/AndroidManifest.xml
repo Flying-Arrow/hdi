@@ -17,14 +17,23 @@
 
     android:theme="@style/AppTheme">
 
-    <activity android:name="EduHDI" android:configChanges="orientation|screenSize"
-        android:label="Education HDI" android:theme="@style/AppTheme">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-
+    <activity
+            android:name=".HealHDI"
+            android:configChanges="orientation|screenSize"
+            android:label="Health HDI"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EduHDI"
+            android:label="Education HDI"/>
+        <activity
+            android:name=".IncHDI"
+            android:label="Income HDI"/>
+            
     <provider
         android:name="in.ac.iitp.hdi.LocationsContentProvider"
         android:authorities="in.ac.iitp.hdi.locations"

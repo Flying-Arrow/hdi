@@ -27,8 +27,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, OnMapClickListener, OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
@@ -43,6 +52,9 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     LocationsDB.FIELD_HDI,
             };
 
+    String userUUID;
+    DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +66,42 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
         if (flag == 1) {
             flag3 = 1;
         }
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                HashMap<String, HdiDataModel> td = new HashMap<String, HdiDataModel>();
+                for (DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
+                    HdiDataModel hdiDataModel = jobSnapshot.getValue(HdiDataModel.class);
+                    td.put(jobSnapshot.getKey(), hdiDataModel);
+                }
+
+                ArrayList<HdiDataModel> values = new ArrayList<>(td.values());
+                List<String> keys = new ArrayList<String>(td.keySet());
+
+                for (int i = 0; i < Math.min(values.size(), keys.size()); i++) {
+                    String timestamp = keys.get(i);
+                    // double EI, double HI, double II, double latitude, double longitude, String userUID) {
+                    HdiDataModel mHdiDataModel = values.get(i);
+                    //Double lat = mHdiDataModel.getLatitude()
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        userUUID = user != null ? user.getUid() : null;
+
     }
 
     @Override
@@ -189,15 +237,22 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     // TODO Auto-generated method stub
 
                     Intent intent = getIntent();
-                    String Hdi = intent.getExtras().getString("HDI").toString();
+                    String healthHDI = intent.getExtras().getString("HealthHDI");
+                    String incomeHDI = intent.getExtras().getString("IncomeHDI");
+                    String eduHDI = intent.getExtras().getString("EducationHDI");
+                    double HDI = Math.cbrt(Double.parseDouble(healthHDI) * Double.parseDouble(incomeHDI) * Double.parseDouble(eduHDI));
+                    if (userUUID != null) {
+                        HdiDataModel mHdiDataModel = new HdiDataModel(Double.parseDouble(eduHDI), Double.parseDouble(healthHDI), Double.parseDouble(incomeHDI), x, y, userUUID);
+                        mDatabase.child(String.valueOf(System.currentTimeMillis())).setValue(mHdiDataModel);
+                    }
+
                     MarkerOptions op = new MarkerOptions();
-                    Double hdi = Double.parseDouble(Hdi);
-                    op.position(new LatLng(x, y)).title(Hdi).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+                    op.position(new LatLng(x, y)).title(String.valueOf(HDI)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
                     googleMap.addMarker(op);
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, x);
                     contentValues.put(LocationsDB.FIELD_LNG, y);
-                    contentValues.put(LocationsDB.FIELD_HDI, Hdi);
+                    contentValues.put(LocationsDB.FIELD_HDI, HDI);
                     LocationInsertTask insertTask = new LocationInsertTask();
                     insertTask.execute(contentValues);
                     flag3 = 0;

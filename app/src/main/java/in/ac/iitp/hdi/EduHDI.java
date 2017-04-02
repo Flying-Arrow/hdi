@@ -1,5 +1,6 @@
 package in.ac.iitp.hdi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -13,13 +14,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,30 +47,6 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
         this.yearsPriSecSchool = 0;
         this.moreEdu = 0;
         this.guessChildEdu = 0;
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.keepSynced(true);
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-
-                System.out.println(dataSnapshot.getKey() + "Value" + dataSnapshot.getValue());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-            }
-        });
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
-        final String userUUID = user != null ? user.getUid() : null;
 
         setContentView(R.layout.activity_eduhdi);
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
@@ -226,13 +196,20 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
                 }
                 EYS = Math.min(18, EYS);
 
-                double EI = MYS / 15D + EYS / 18D;
-                Toast.makeText(getApplicationContext(), "MYS: " + MYS + "; EYS: " + EYS + "; EI: " + EI, Toast.LENGTH_LONG).show();
+                double EI = (MYS / 15D + EYS / 18D) / 2D;
 
-                if (userUUID != null) {
-                    HdiDataModel mHdiDataModel = new HdiDataModel(EI, 0, 0, 0, 0, userUUID);
-                    mDatabase.child(String.valueOf(System.currentTimeMillis())).setValue(mHdiDataModel);
-                }
+                Toast.makeText(EduHDI.this, "Tap to select your location!", Toast.LENGTH_LONG).show();
+
+                Intent in = new Intent(EduHDI.this, Map.class);
+
+                Intent intent = getIntent();
+                String healthHDI = intent.getExtras().getString("HealthHDI");
+                String incomeHDI = intent.getExtras().getString("IncomeHDI");
+                in.putExtra("FLAG", "1");
+                in.putExtra("HealthHDI", healthHDI);
+                in.putExtra("IncomeHDI", incomeHDI);
+                in.putExtra("EducationHDI", String.valueOf(EI));
+                startActivity(in);
             }
         });
     }

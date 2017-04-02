@@ -11,8 +11,15 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by anupam on 3/4/17.
@@ -25,6 +32,40 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                HashMap<String, HdiDataModel> td = new HashMap<String, HdiDataModel>();
+                for (DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
+                    HdiDataModel hdiDataModel = jobSnapshot.getValue(HdiDataModel.class);
+                    td.put(jobSnapshot.getKey(), hdiDataModel);
+                }
+
+                ArrayList<HdiDataModel> values = new ArrayList<>(td.values());
+                List<String> keys = new ArrayList<String>(td.keySet());
+
+                for (int i = 0; i < Math.min(values.size(), keys.size()); i++) {
+                    String timestamp = keys.get(i);
+                    // double EI, double HI, double II, double latitude, double longitude, String userUID) {
+                    HdiDataModel mHdiDataModel = values.get(i);
+                    //Double lat = mHdiDataModel.getLatitude()
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();

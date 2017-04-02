@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -134,6 +136,25 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_privacy:
+                Intent homeIntent = new Intent(this, PrivacyActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+                break;
+            default: //do nothing
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
+    }
 
     @Override
     protected void onStop() {

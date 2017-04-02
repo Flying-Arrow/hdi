@@ -72,6 +72,12 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".PrivacyActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Privacy Policy"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".Map"
             android:label="@string/title_activity_map"
             android:screenOrientation="portrait">

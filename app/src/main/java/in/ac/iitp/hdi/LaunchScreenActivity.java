@@ -70,7 +70,7 @@ public class LaunchScreenActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void res) {
-            Intent intent = new Intent(LaunchScreenActivity.this, loggedIn ? EduHDI.class : AuthActivity.class);
+            Intent intent = new Intent(LaunchScreenActivity.this, loggedIn ? MainActivity.class : AuthActivity.class);
             startActivity(intent);
             finish();
         }

@@ -59,7 +59,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import in.ac.iitp.hdi.EduHDI;
+import in.ac.iitp.hdi.MainActivity;
 import in.ac.iitp.hdi.R;
 
 
@@ -151,7 +151,7 @@ public class AuthActivity extends BaseActivity implements
                         editor.putInt(getString(R.string.login_mode), ANONYMOUS_SIGN_IN);
                         editor.apply();
 
-                        Intent intent = new Intent(mActivity, EduHDI.class);
+                        Intent intent = new Intent(mActivity, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 
@@ -192,7 +192,7 @@ public class AuthActivity extends BaseActivity implements
                 editor.putInt(getString(R.string.login_mode), GOOGLE_SIGN_IN);
                 editor.apply();
 
-                Intent intent = new Intent(this, EduHDI.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.startActivity(intent);
 
@@ -319,7 +319,7 @@ public class AuthActivity extends BaseActivity implements
                             editor.putInt(getString(R.string.login_mode), EMAIL_PASSWORD_SIGN_IN);
                             editor.apply();
 
-                            Intent intent = new Intent(mActivity, EduHDI.class);
+                            Intent intent = new Intent(mActivity, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
@@ -366,7 +366,7 @@ public class AuthActivity extends BaseActivity implements
                             editor.putInt(getString(R.string.login_mode), EMAIL_PASSWORD_SIGN_IN);
                             editor.apply();
 
-                            Intent intent = new Intent(mActivity, EduHDI.class);
+                            Intent intent = new Intent(mActivity, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }

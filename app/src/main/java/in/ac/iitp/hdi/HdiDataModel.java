@@ -1,4 +1,4 @@
-package in.ac.iitp.hdi.data;
+package in.ac.iitp.hdi;
 
 /**
  * Created by anupam on 2/4/17.

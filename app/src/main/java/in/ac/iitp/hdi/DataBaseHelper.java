@@ -10,27 +10,25 @@ import android.util.Log;
  * Created by satish on 4/1/2017.
  */
 
-public class DataBaseHelper extends SQLiteOpenHelper
-{
-    public DataBaseHelper(Context context, String name,CursorFactory factory, int version)
-    {
+public class DataBaseHelper extends SQLiteOpenHelper {
+    public DataBaseHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
+
     // Called when no database exists in disk and the helper class needs
     // to create a new one.
     @Override
-    public void onCreate(SQLiteDatabase _db)
-    {
+    public void onCreate(SQLiteDatabase _db) {
         _db.execSQL(InfoDataBaseAdapter.DATABASE_CREATE);
 
     }
+
     // Called when there is a database version mismatch meaning that the version
     // of the database on disk needs to be upgraded to the current version.
     @Override
-    public void onUpgrade(SQLiteDatabase _db, int _oldVersion, int _newVersion)
-    {
+    public void onUpgrade(SQLiteDatabase _db, int _oldVersion, int _newVersion) {
         // Log the version upgrade.
-        Log.w("TaskDBAdapter", "Upgrading from version " +_oldVersion + " to " +_newVersion + ", which will destroy all old data");
+        Log.w("TaskDBAdapter", "Upgrading from version " + _oldVersion + " to " + _newVersion + ", which will destroy all old data");
 
 
         // Upgrade the existing database to conform to the new version. Multiple

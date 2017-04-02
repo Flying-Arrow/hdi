@@ -1,4 +1,4 @@
-package in.ac.iitp.hdi.activities;
+package in.ac.iitp.hdi;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -24,9 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import in.ac.iitp.hdi.R;
-import in.ac.iitp.hdi.data.HdiDataModel;
 
 /**
  * Created by anupam(opticod) on 31/3/17.

@@ -1,5 +1,6 @@
 package in.ac.iitp.hdi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,14 +8,14 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
+
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+
 import java.util.HashMap;
-import in.ac.iitp.hdi.R;
 
 /**
  * Created by satish on 4/2/2017.
@@ -22,10 +23,11 @@ import in.ac.iitp.hdi.R;
 
 public class IncHDI extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
-    private SliderLayout mDemoSlider;
     final int[] a = {0};
-    double II=0;
-    double GNI=0;
+    double II = 0;
+    double GNI = 0;
+    private SliderLayout mDemoSlider;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +70,10 @@ public class IncHDI extends AppCompatActivity implements BaseSliderView.OnSlider
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
 
-                progress=progress+15000;
+                progress = progress + 15000;
                 ageValue.setText(String.valueOf(progress));
-                GNI=(double)progress;
-                GNI=GNI/66.7;
+                GNI = (double) progress;
+                GNI = GNI / 66.7;
             }
 
             @Override
@@ -86,13 +88,13 @@ public class IncHDI extends AppCompatActivity implements BaseSliderView.OnSlider
             @Override
             public void onClick(View view) {
 
-                    II=(Math.log(GNI)-Math.log(100))/(Math.log(75000)-Math.log(100));
-                System.out.println("Value of Income Index:"+II);
-                Intent intentEduHDI = new Intent(getApplicationContext(), EduHDI.class);
+                II = (Math.log(GNI) - Math.log(100)) / (Math.log(75000) - Math.log(100));
+                System.out.println("Value of Income Index:" + II);
+                Intent intentEduHDI = new Intent(getApplicationContext(), in.ac.iitp.hdi.EduHDI.class);
                 intentEduHDI.putExtra("IncomeHDI", Double.toString(II));
                 Intent intent = getIntent();
-                String HEALTHHDI=intent.getExtras().getString("HEALTHHDI");
-                intentEduHDI.putExtra("HealthHDI",HEALTHHDI);
+                String HEALTHHDI = intent.getExtras().getString("HEALTHHDI");
+                intentEduHDI.putExtra("HealthHDI", HEALTHHDI);
                 startActivity(intentEduHDI);
 
             }

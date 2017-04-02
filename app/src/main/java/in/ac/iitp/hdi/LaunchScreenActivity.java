@@ -1,4 +1,4 @@
-package in.ac.iitp.hdi.activities;
+package in.ac.iitp.hdi;
 /*
  * Copyright (C) 2017 Anupam Das
  *
@@ -24,7 +24,6 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import in.ac.iitp.hdi.R;
 import in.ac.iitp.hdi.auth.AuthActivity;
 
 

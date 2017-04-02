@@ -59,8 +59,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import in.ac.iitp.hdi.EduHDI;
 import in.ac.iitp.hdi.R;
-import in.ac.iitp.hdi.activities.EduHDI;
 
 
 /**

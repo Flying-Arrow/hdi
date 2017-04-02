@@ -28,11 +28,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
 import java.util.ArrayList;
 
 
-public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, OnMapClickListener, OnMapReadyCallback , GoogleMap.OnMapLongClickListener {
+public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, OnMapClickListener, OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
     GoogleMap googleMap;
     double x, y;
@@ -52,8 +51,8 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
         fm.getMapAsync(this);
         Intent intent = getIntent();
         int flag = Integer.parseInt(intent.getExtras().getString("FLAG"));
-        if (flag==1){
-            flag3=1;
+        if (flag == 1) {
+            flag3 = 1;
         }
     }
 
@@ -66,6 +65,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
     public void onDestroy() {
         super.onDestroy();
     }
+
     @Override
     public void onMapReady(GoogleMap googleMapp) {
         googleMap = googleMapp;
@@ -95,19 +95,20 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
             }
         }
     }
-/*
- hdi >= 0.8          : blue
- 0.8 > hdi >= 0.7    : green
- 0.7 > hdi >= 0.55   : orange
- 0.55 > hdi          : red
-*/
+
+    /*
+     hdi >= 0.8          : blue
+     0.8 > hdi >= 0.7    : green
+     0.7 > hdi >= 0.55   : orange
+     0.55 > hdi          : red
+    */
     public void initialise() {
         LatLng iit = new LatLng(25.535721, 84.851003);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iit, 15));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
     }
 
-    private float getColor(double hdi){
+    private float getColor(double hdi) {
         if (hdi >= 0.8) {
             return BitmapDescriptorFactory.HUE_AZURE;
         } else if (hdi >= 0.7) {
@@ -175,7 +176,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
 
     @Override
     public void onMapClick(LatLng arg0) {
-        if(flag3==1) {
+        if (flag3 == 1) {
             // TODO Auto-generated method stub
             x = arg0.latitude;
             y = arg0.longitude;
@@ -199,7 +200,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     contentValues.put(LocationsDB.FIELD_HDI, Hdi);
                     LocationInsertTask insertTask = new LocationInsertTask();
                     insertTask.execute(contentValues);
-                    flag3=0;
+                    flag3 = 0;
 
                 }
             });
@@ -212,48 +213,48 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                 }
             });
             alert2.show();
-        }else{
-                AlertDialog alert = new AlertDialog.Builder(Map.this).create();
-                alert.setTitle("Choose your location!");
-                alert.setButton(AlertDialog.BUTTON_NEGATIVE, "Toggle View", new DialogInterface.OnClickListener() {
+        } else {
+            AlertDialog alert = new AlertDialog.Builder(Map.this).create();
+            alert.setTitle("Choose your location!");
+            alert.setButton(AlertDialog.BUTTON_NEGATIVE, "Toggle View", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        if (flag == 1) {
-                            googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                            flag = 0;
-                        } else {
-                            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                            flag = 1;
-                        }
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Auto-generated method stub
+                    if (flag == 1) {
+                        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        flag = 0;
+                    } else {
+                        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        flag = 1;
                     }
-                });
-                alert.setButton(AlertDialog.BUTTON_POSITIVE, "Get Average", new DialogInterface.OnClickListener() {
+                }
+            });
+            alert.setButton(AlertDialog.BUTTON_POSITIVE, "Get Average", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        LatLngBounds bounds = googleMap.getProjection().getVisibleRegion().latLngBounds;
-                        int k = 0;
-                        Cursor mCursor = getContentResolver().query(LocationsContentProvider.CONTENT_URI, mProjection, null, null, null);
-                        if(mCursor.getCount()>0){
-                            Double hdi;
-                            Double lat, lng;
-                            while (mCursor.moveToNext()) {
-                                hdi = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_HDI)));
-                                lat = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LAT)));
-                                lng = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LNG)));
-                                if(bounds.contains(new LatLng(lat, lng))){
-                                    k++;
-                                }
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Auto-generated method stub
+                    LatLngBounds bounds = googleMap.getProjection().getVisibleRegion().latLngBounds;
+                    int k = 0;
+                    Cursor mCursor = getContentResolver().query(LocationsContentProvider.CONTENT_URI, mProjection, null, null, null);
+                    if (mCursor.getCount() > 0) {
+                        Double hdi;
+                        Double lat, lng;
+                        while (mCursor.moveToNext()) {
+                            hdi = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_HDI)));
+                            lat = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LAT)));
+                            lng = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LNG)));
+                            if (bounds.contains(new LatLng(lat, lng))) {
+                                k++;
                             }
-                            System.out.println(k+"------------------------------------------");
-                            Toast.makeText(Map.this,"Total markers on screen : "+k,Toast.LENGTH_LONG).show();
                         }
+                        System.out.println(k + "------------------------------------------");
+                        Toast.makeText(Map.this, "Total markers on screen : " + k, Toast.LENGTH_LONG).show();
                     }
-                });
-                alert.show();
+                }
+            });
+            alert.show();
         }
     }
 
@@ -261,8 +262,8 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
     public void onMapLongClick(LatLng latLng) {
 
 
-        final CharSequence[] items = {"All region","HDI > 0.8","0.8 > HDI > 0.7","0.7 > HDI > 0.55", "0.55 > HDI"};
-        final ArrayList seletedItems=new ArrayList();
+        final CharSequence[] items = {"All region", "HDI > 0.8", "0.8 > HDI > 0.7", "0.7 > HDI > 0.55", "0.55 > HDI"};
+        final ArrayList seletedItems = new ArrayList();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("HDI Range");
         builder.setMultiChoiceItems(items, null,
@@ -281,23 +282,23 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
             public void onClick(DialogInterface dialog, int id) {
                 googleMap.clear();
                 Cursor mCursor = getContentResolver().query(LocationsContentProvider.CONTENT_URI, mProjection, null, null, null);
-                if(mCursor.getCount()>0){
+                if (mCursor.getCount() > 0) {
                     Double hdi;
                     Double lat, lng;
                     while (mCursor.moveToNext()) {
                         hdi = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_HDI)));
                         lat = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LAT)));
                         lng = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LNG)));
-                        for(int i=0;i<seletedItems.size();i++){
-                            if(seletedItems.get(i).toString()=="0"){
+                        for (int i = 0; i < seletedItems.size(); i++) {
+                            if (seletedItems.get(i).toString() == "0") {
                                 drawMarker(lat, lng, hdi);
-                            } else if((seletedItems.get(i).toString()=="1") && (hdi>=0.8)){
+                            } else if ((seletedItems.get(i).toString() == "1") && (hdi >= 0.8)) {
                                 drawMarker(lat, lng, hdi);
-                            } else if((seletedItems.get(i).toString()=="2") && (hdi>=0.7) && (hdi<0.8)){
+                            } else if ((seletedItems.get(i).toString() == "2") && (hdi >= 0.7) && (hdi < 0.8)) {
                                 drawMarker(lat, lng, hdi);
-                            } else if((seletedItems.get(i).toString()=="3") && (hdi>=0.55) && (hdi<0.7)){
+                            } else if ((seletedItems.get(i).toString() == "3") && (hdi >= 0.55) && (hdi < 0.7)) {
                                 drawMarker(lat, lng, hdi);
-                            }else if((seletedItems.get(i).toString()=="4") && (hdi<0.55)){
+                            } else if ((seletedItems.get(i).toString() == "4") && (hdi < 0.55)) {
                                 drawMarker(lat, lng, hdi);
                             }
                         }

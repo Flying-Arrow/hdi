@@ -13,12 +13,20 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import in.ac.iitp.hdi.R;
+import in.ac.iitp.hdi.data.HdiDataModel;
 
 /**
  * Created by anupam(opticod) on 31/3/17.
@@ -48,6 +56,30 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
         this.yearsPriSecSchool = 0;
         this.moreEdu = 0;
         this.guessChildEdu = 0;
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                System.out.println(dataSnapshot.getKey() + "Value" + dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final String userUUID = user != null ? user.getUid() : null;
 
         setContentView(R.layout.activity_eduhdi);
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
@@ -197,7 +229,13 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
                 }
                 EYS = Math.min(18, EYS);
 
-                Toast.makeText(getApplicationContext(), "MYS: " + MYS + "; EYS: " + EYS, Toast.LENGTH_LONG).show();
+                double EI = MYS / 15D + EYS / 18D;
+                Toast.makeText(getApplicationContext(), "MYS: " + MYS + "; EYS: " + EYS + "; EI: " + EI, Toast.LENGTH_LONG).show();
+
+                if (userUUID != null) {
+                    HdiDataModel mHdiDataModel = new HdiDataModel(EI, 0, 0, 0, 0, userUUID);
+                    mDatabase.child(String.valueOf(System.currentTimeMillis())).setValue(mHdiDataModel);
+                }
             }
         });
     }

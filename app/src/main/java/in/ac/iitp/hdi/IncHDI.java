@@ -89,6 +89,10 @@ public class IncHDI extends AppCompatActivity implements BaseSliderView.OnSlider
                     II=(Math.log(GNI)-Math.log(100))/(Math.log(75000)-Math.log(100));
                 System.out.println("Value of Income Index:"+II);
                 Intent intentEduHDI = new Intent(getApplicationContext(), EduHDI.class);
+                intentEduHDI.putExtra("IncomeHDI", Double.toString(II));
+                Intent intent = getIntent();
+                String HEALTHHDI=intent.getExtras().getString("HEALTHHDI");
+                intentEduHDI.putExtra("HealthHDI",HEALTHHDI);
                 startActivity(intentEduHDI);
 
             }

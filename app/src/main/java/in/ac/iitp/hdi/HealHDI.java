@@ -46,6 +46,7 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
     double LEI=0;
     double LEB=0;
     final String state_1="";
+    int flag = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
         infoDataBaseAdapter=new InfoDataBaseAdapter(this);
         infoDataBaseAdapter=infoDataBaseAdapter.open();
         infoDataBaseAdapter.insertEntry("Andhra Pradesh","Male","2001","2005","63.4");
-        //filling the database
         infoDataBaseAdapter.insertEntry("Andhra Pradesh","Female","2001","2005","67.9");
         infoDataBaseAdapter.insertEntry("Andhra Pradesh","Male","2006","2010","65.4");
         infoDataBaseAdapter.insertEntry("Andhra Pradesh","Female","2006","2010","69.4");
@@ -286,12 +286,12 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
                 System.out.println("STATE: "+state);
                 System.out.println("BirthYear: "+birthYear);
                 System.out.println("Gender: "+gender);
-               //trying to fetch the data from database and calculate HI
                 String temp=infoDataBaseAdapter.getSingleEntry(state,gender,String.valueOf(birthYear));
                 LEB=Double.valueOf(temp);
                 LEI=(LEB-20)/65;
                 System.out.println("Value of Life Expectancy Index :"+LEI);
                 Intent intentIncHDI = new Intent(getApplicationContext(), IncHDI.class);
+                intentIncHDI.putExtra("HEALTHHDI", Double.toString(LEI));
                 startActivity(intentIncHDI);
 
             }
@@ -303,7 +303,6 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
         categories.add("Bihar");
         categories.add("Gujarat");
         categories.add("Haryana");
-        categories.add("Himachal Pradesh");
         categories.add("Karnataka");
         categories.add("Kerala");
         categories.add("Madhya Pradesh");
@@ -326,8 +325,10 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
         state=item;
-
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        if(flag>0){
+            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        }
+        flag++;
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

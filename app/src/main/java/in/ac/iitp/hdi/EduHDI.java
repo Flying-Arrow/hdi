@@ -56,6 +56,10 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
                 Intent in = new Intent(EduHDI.this, Map.class);
                 in.putExtra("HDI", Double.toString(Hdi));
                 in.putExtra("FLAG", "1");
+                Intent intent=getIntent();
+                String healthHDI=intent.getExtras().getString("HealthHDI");
+                String incomeHDI=intent.getExtras().getString("IncomeHDI");
+
                 startActivity(in);
             }
         });

@@ -221,10 +221,10 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("", R.mipmap.img1);
-        file_maps.put("", R.mipmap.img2);
-        file_maps.put("", R.mipmap.img3);
-        file_maps.put("", R.mipmap.img4);
+        file_maps.put("HI1", R.drawable.img1);
+        file_maps.put("HI2", R.drawable.img2);
+        file_maps.put("HI3", R.drawable.img3);
+        file_maps.put("HI4", R.drawable.img4);
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);

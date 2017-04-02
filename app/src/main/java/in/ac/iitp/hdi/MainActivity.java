@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, lat);
                     contentValues.put(LocationsDB.FIELD_LNG, lng);
-                    contentValues.put(LocationsDB.FIELD_HDI, Math.cbrt(hea*edu*inc));
+                    contentValues.put(LocationsDB.FIELD_HDI, Math.cbrt(hea * edu * inc));
                     contentValues.put(LocationsDB.FIELD_INC, inc);
                     contentValues.put(LocationsDB.FIELD_HEA, hea);
                     contentValues.put(LocationsDB.FIELD_EDU, edu);
@@ -90,10 +90,10 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("", R.mipmap.img3);
-        file_maps.put("", R.mipmap.img4);
-        file_maps.put("", R.mipmap.img5);
-        file_maps.put("", R.mipmap.img9);
+        file_maps.put("HDI1", R.drawable.img3);
+        file_maps.put("HDI2", R.drawable.img4);
+        file_maps.put("HDI3", R.drawable.img5);
+        file_maps.put("HDI4", R.drawable.img9);
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);

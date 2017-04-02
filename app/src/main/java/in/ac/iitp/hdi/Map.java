@@ -38,7 +38,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
 
 
 public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, OnMapClickListener, OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
@@ -98,7 +97,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, lat);
                     contentValues.put(LocationsDB.FIELD_LNG, lng);
-                    contentValues.put(LocationsDB.FIELD_HDI, Math.cbrt(hea*edu*inc));
+                    contentValues.put(LocationsDB.FIELD_HDI, Math.cbrt(hea * edu * inc));
                     contentValues.put(LocationsDB.FIELD_INC, inc);
                     contentValues.put(LocationsDB.FIELD_HEA, hea);
                     contentValues.put(LocationsDB.FIELD_EDU, edu);
@@ -108,8 +107,8 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     insertTask.execute(contentValues);
 
                     MarkerOptions markerOptions = new MarkerOptions();
-                    Double hdi = Math.cbrt(hea*edu*inc);
-                    markerOptions.position(new LatLng(lat, lng)).title("HDI : "+hdi.toString().substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+                    Double hdi = Math.cbrt(hea * edu * inc);
+                    markerOptions.position(new LatLng(lat, lng)).title("HDI : " + hdi.toString().substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
                     googleMap.addMarker(markerOptions);
 
                 }
@@ -194,13 +193,13 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
     private void drawMarker(LatLng point, String info) {
         MarkerOptions markerOptions = new MarkerOptions();
         Double hdi = Double.parseDouble(info);
-        markerOptions.position(point).title("HDI : "+info.toString().substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+        markerOptions.position(point).title("HDI : " + info.toString().substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
         googleMap.addMarker(markerOptions);
     }
 
     private void drawMarker(Double lat, Double lng, Double hdi) {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(lat, lng)).title("HDI : "+hdi.toString().substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+        markerOptions.position(new LatLng(lat, lng)).title("HDI : " + hdi.toString().substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
         googleMap.addMarker(markerOptions);
     }
 
@@ -270,7 +269,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     }
 
                     MarkerOptions op = new MarkerOptions();
-                    op.position(new LatLng(x, y)).title("HDI : "+String.valueOf(HDI).substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
+                    op.position(new LatLng(x, y)).title("HDI : " + String.valueOf(HDI).substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
                     googleMap.addMarker(op);
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, x);
@@ -325,11 +324,11 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                             lat = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LAT)));
                             lng = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LNG)));
                             if (bounds.contains(new LatLng(lat, lng))) {
-                                sum+=hdi;
+                                sum += hdi;
                                 k++;
                             }
                         }
-                        Toast.makeText(Map.this, "Average HDI of the region is " + String.valueOf((sum/k)).substring(0,5), Toast.LENGTH_LONG).show();
+                        Toast.makeText(Map.this, "Average HDI of the region is " + String.valueOf((sum / k)).substring(0, 5), Toast.LENGTH_LONG).show();
                     }
                 }
             });

@@ -52,10 +52,10 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("", R.mipmap.img9);
-        file_maps.put("", R.mipmap.img10);
-        file_maps.put("", R.mipmap.img11);
-        file_maps.put("", R.mipmap.img12);
+        file_maps.put("EI1", R.drawable.img9);
+        file_maps.put("EI1", R.drawable.img10);
+        file_maps.put("EI1", R.drawable.img11);
+        file_maps.put("EI1", R.drawable.img12);
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);
@@ -172,50 +172,51 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
             public void onClick(View view) {
                 currentlyRecvEdu = getSelectedAnswer(iRadGroupCurrentlyEduList) == 0;
                 isCompletedMaster = getSelectedAnswer(iRadGroupCompletedMaster) == 0;
-                if((getSelectedAnswer(iRadGroupCurrentlyEduList)!=-1) && getSelectedAnswer(iRadGroupCompletedMaster)!=-1){
-                if (currentlyRecvEdu) {
-                    MYS = yearsPriSecSchool;
-                }
-                if (isCompletedMaster && age > 25) {
-                    MYS = 15;
-                }
-                if (guessChildEdu != 0 && !currentlyRecvEdu) {
-                    MYS = guessChildEdu;
-                }
-                MYS = Math.min(15, MYS);
+                if ((getSelectedAnswer(iRadGroupCurrentlyEduList) != -1) && getSelectedAnswer(iRadGroupCompletedMaster) != -1) {
+                    if (currentlyRecvEdu) {
+                        MYS = yearsPriSecSchool;
+                    }
+                    if (isCompletedMaster && age > 25) {
+                        MYS = 15;
+                    }
+                    if (guessChildEdu != 0 && !currentlyRecvEdu) {
+                        MYS = guessChildEdu;
+                    }
+                    MYS = Math.min(15, MYS);
 
-                if (currentlyRecvEdu) {
-                    EYS = yearsPriSecSchool;
+                    if (currentlyRecvEdu) {
+                        EYS = yearsPriSecSchool;
+                    } else {
+                        EYS = guessChildEdu;
+                    }
+                    if (isCompletedMaster && age > 25) {
+                        EYS += 3;
+                    }
+                    if (moreEdu != 0 && age > 25) {
+                        EYS += moreEdu;
+                    }
+                    EYS = Math.min(18, EYS);
+
+                    double EI = (MYS / 15D + EYS / 18D) / 2D;
+
+                    Toast.makeText(EduHDI.this, "Tap to select your location!", Toast.LENGTH_LONG).show();
+
+                    Intent in = new Intent(EduHDI.this, Map.class);
+
+                    Intent intent = getIntent();
+                    String healthHDI = intent.getExtras().getString("HealthHDI");
+                    String incomeHDI = intent.getExtras().getString("IncomeHDI");
+                    in.putExtra("FLAG", "1");
+                    in.putExtra("HealthHDI", healthHDI);
+                    in.putExtra("IncomeHDI", incomeHDI);
+                    in.putExtra("EducationHDI", String.valueOf(EI));
+                    startActivity(in);
+
+
                 } else {
-                    EYS = guessChildEdu;
-                }
-                if (isCompletedMaster && age > 25) {
-                    EYS += 3;
-                }
-                if (moreEdu != 0 && age > 25) {
-                    EYS += moreEdu;
-                }
-                EYS = Math.min(18, EYS);
-
-                double EI = (MYS / 15D + EYS / 18D) / 2D;
-
-                Toast.makeText(EduHDI.this, "Tap to select your location!", Toast.LENGTH_LONG).show();
-
-                Intent in = new Intent(EduHDI.this, Map.class);
-
-                Intent intent = getIntent();
-                String healthHDI = intent.getExtras().getString("HealthHDI");
-                String incomeHDI = intent.getExtras().getString("IncomeHDI");
-                in.putExtra("FLAG", "1");
-                in.putExtra("HealthHDI", healthHDI);
-                in.putExtra("IncomeHDI", incomeHDI);
-                in.putExtra("EducationHDI", String.valueOf(EI));
-                startActivity(in);
-
-
-            }else{
                     Toast.makeText(EduHDI.this, "Please select all fields!", Toast.LENGTH_LONG).show();
-            }}
+                }
+            }
 
         });
     }

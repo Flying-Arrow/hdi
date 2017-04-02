@@ -35,10 +35,10 @@ public class IncHDI extends AppCompatActivity implements BaseSliderView.OnSlider
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("", R.mipmap.img5);
-        file_maps.put("", R.mipmap.img6);
-        file_maps.put("", R.mipmap.img7);
-        file_maps.put("", R.mipmap.img8);
+        file_maps.put("II1", R.drawable.img5);
+        file_maps.put("II2", R.drawable.img6);
+        file_maps.put("II3", R.drawable.img7);
+        file_maps.put("II4", R.drawable.img8);
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);

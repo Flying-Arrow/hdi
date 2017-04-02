@@ -3,7 +3,6 @@ package in.ac.iitp.hdi;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -91,10 +90,10 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Img1", R.mipmap.ic_launcher);
-        file_maps.put("Img2", R.mipmap.ic_launcher);
-        file_maps.put("Img3", R.mipmap.ic_launcher);
-        file_maps.put("Img4", R.mipmap.ic_launcher);
+        file_maps.put("", R.mipmap.img3);
+        file_maps.put("", R.mipmap.img4);
+        file_maps.put("", R.mipmap.img5);
+        file_maps.put("", R.mipmap.img9);
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);

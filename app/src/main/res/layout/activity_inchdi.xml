@@ -49,7 +49,6 @@
             android:layout_marginBottom="@dimen/padding"
             android:layout_marginLeft="@dimen/padding"
             android:layout_marginRight="@dimen/padding"
-            android:layout_marginTop="@dimen/padding"
             card_view:cardBackgroundColor="@color/home_color"
             card_view:cardCornerRadius="@dimen/cardview_default_radius"
             card_view:cardElevation="@dimen/cardview_default_elevation"

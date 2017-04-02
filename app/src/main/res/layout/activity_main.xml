@@ -74,7 +74,7 @@
             android:background="@color/colorAccent"
             android:includeFontPadding="false"
             android:padding="@dimen/padding"
-            android:text="Start Calulating HDI!"
+            android:text="Calulate HDI"
             android:textAppearance="?android:textAppearanceMedium"
             android:textStyle="bold" />
 

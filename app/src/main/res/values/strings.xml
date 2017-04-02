@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hdi</string>
+    <string name="app_name">HDI</string>
     <string name="hdi_about">The Human Development index is a measure of economic development and economic welfare.
 The HDI examines life expectancy, education and income levels and uses this to create an overall score between 0 and 1</string>
     <string name="title_activity_map">Map</string>

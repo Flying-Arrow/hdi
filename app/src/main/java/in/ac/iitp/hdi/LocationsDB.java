@@ -16,6 +16,10 @@ public class LocationsDB extends SQLiteOpenHelper {
     public static final String FIELD_ROW_ID = "_id";
     public static final String FIELD_LAT = "lat";
     public static final String FIELD_LNG = "lng";
+    public static final String FIELD_INC = "inc";
+    public static final String FIELD_HEA = "hea";
+    public static final String FIELD_EDU = "edu";
+    public static final String FIELD_TIM = "tim";
     public static final String FIELD_HDI = "hdi";
     private static final String DATABASE_TABLE = "locations";
     private static String DBNAME = "locationmarkersqlite";
@@ -33,6 +37,10 @@ public class LocationsDB extends SQLiteOpenHelper {
                 FIELD_ROW_ID + " integer primary key autoincrement , " +
                 FIELD_LNG + " double , " +
                 FIELD_LAT + " double , " +
+                FIELD_INC + " double , " +
+                FIELD_HEA + " double , " +
+                FIELD_EDU + " double , " +
+                FIELD_TIM + " text , " +
                 FIELD_HDI + " text " +
                 " ) ";
         db.execSQL(sql);
@@ -50,7 +58,7 @@ public class LocationsDB extends SQLiteOpenHelper {
     }
 
     public Cursor getAllLocations() {
-        return mDB.query(DATABASE_TABLE, new String[]{FIELD_ROW_ID, FIELD_LAT, FIELD_LNG, FIELD_HDI}, null, null, null, null, null);
+        return mDB.query(DATABASE_TABLE, new String[]{FIELD_ROW_ID, FIELD_LAT, FIELD_LNG, FIELD_INC, FIELD_HEA, FIELD_EDU, FIELD_TIM, FIELD_HDI}, null, null, null, null, null);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

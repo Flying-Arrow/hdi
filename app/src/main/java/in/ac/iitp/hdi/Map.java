@@ -192,7 +192,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     String Hdi = intent.getExtras().getString("HDI").toString();
                     MarkerOptions op = new MarkerOptions();
                     Double hdi = Double.parseDouble(Hdi);
-                    op.position(new LatLng(x, y)).title(Hdi).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+                    op.position(new LatLng(x, y)).title("HDI : "+Hdi).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
                     googleMap.addMarker(op);
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, x);

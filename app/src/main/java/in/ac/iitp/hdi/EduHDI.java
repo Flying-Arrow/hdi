@@ -1,8 +1,7 @@
 package in.ac.iitp.hdi;
 
-import android.content.ContentValues;
+
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -20,12 +19,6 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.util.HashMap;
-
-import in.ac.iitp.hdi.R;
-
-import static android.R.attr.x;
-import static android.R.attr.y;
-import static android.R.id.input;
 
 /**
  * Created by anupam(opticod) on 31/3/17.

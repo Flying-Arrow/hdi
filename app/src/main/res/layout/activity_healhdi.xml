@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="39dp"
-                    android:max="16"
+                    android:max="117"
                     android:paddingLeft="@dimen/padding"
                     android:paddingRight="@dimen/padding"
                     android:paddingTop="@dimen/padding"

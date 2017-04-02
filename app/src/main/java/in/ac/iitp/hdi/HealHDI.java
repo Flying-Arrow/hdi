@@ -261,7 +261,7 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
 
-                progress=progress+2001;
+                progress=progress+1900;
                 ageValue.setText(String.valueOf(progress));
                 birthYear=progress;
             }
@@ -281,18 +281,66 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
             @Override
             public void onClick(View view) {
                 int selectedId = radioSexGroup.getCheckedRadioButtonId();
-                radioSexButton=(RadioButton)findViewById(selectedId);
-                gender=radioSexButton.getText().toString();
-                System.out.println("STATE: "+state);
-                System.out.println("BirthYear: "+birthYear);
-                System.out.println("Gender: "+gender);
-                String temp=infoDataBaseAdapter.getSingleEntry(state,gender,String.valueOf(birthYear));
+                if(selectedId!=-1){
+                    radioSexButton=(RadioButton)findViewById(selectedId);
+                    gender=radioSexButton.getText().toString();
+                    System.out.println("STATE: "+state);
+                    System.out.println("BirthYear: "+birthYear);
+                    System.out.println("Gender: "+gender);
+                    String temp;
+                if(birthYear>2000) {
+                    temp = infoDataBaseAdapter.getSingleEntry(state, gender, String.valueOf(birthYear));
+                }
+                else if(birthYear>=1995 && birthYear<=2000){
+                    if(gender.equals("Male")){
+                        temp="62.6";
+                    }
+                    else{
+                        temp="61.8";
+                    }
+                }
+                else if(birthYear>=1990 && birthYear<=1994){
+                    if(gender.equals("Male")){
+                        temp="59.0";
+                    }
+                    else{
+                        temp="58.1";
+                    }
+                }
+                else if(birthYear>=1985 && birthYear<=1989){
+                    if(gender.equals("Male")){
+                        temp="57.6";
+                    }
+                    else{
+                        temp="56.7";
+                    }
+                }
+                else if(birthYear>=1980 && birthYear<=1984){
+                    if(gender.equals("Male")){
+                        temp="55.8";
+                    }
+                    else{
+                        temp="54.9";
+                    }
+                }
+                else{
+                    if(gender.equals("Male")){
+                        temp="53.5";
+                    }
+                    else{
+                        temp="52.5";
+                    }
+                }
                 LEB=Double.valueOf(temp);
                 LEI=(LEB-20)/65;
                 System.out.println("Value of Life Expectancy Index :"+LEI);
                 Intent intentIncHDI = new Intent(getApplicationContext(), IncHDI.class);
                 intentIncHDI.putExtra("HEALTHHDI", Double.toString(LEI));
                 startActivity(intentIncHDI);
+                }
+                else{
+                    Toast.makeText(HealHDI.this, "Choose gender!", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -326,7 +374,7 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
         String item = parent.getItemAtPosition(position).toString();
         state=item;
         if(flag>0){
-            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
         }
         flag++;
     }
@@ -344,7 +392,6 @@ public class HealHDI extends AppCompatActivity implements BaseSliderView.OnSlide
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(this, slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
     }
 
     @Override

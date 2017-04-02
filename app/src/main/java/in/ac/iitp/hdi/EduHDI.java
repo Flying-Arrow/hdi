@@ -172,6 +172,7 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
             public void onClick(View view) {
                 currentlyRecvEdu = getSelectedAnswer(iRadGroupCurrentlyEduList) == 0;
                 isCompletedMaster = getSelectedAnswer(iRadGroupCompletedMaster) == 0;
+                if((getSelectedAnswer(iRadGroupCurrentlyEduList)!=-1) && getSelectedAnswer(iRadGroupCompletedMaster)!=-1){
                 if (currentlyRecvEdu) {
                     MYS = yearsPriSecSchool;
                 }
@@ -210,7 +211,12 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
                 in.putExtra("IncomeHDI", incomeHDI);
                 in.putExtra("EducationHDI", String.valueOf(EI));
                 startActivity(in);
-            }
+
+
+            }else{
+                    Toast.makeText(EduHDI.this, "Please select all fields!", Toast.LENGTH_LONG).show();
+            }}
+
         });
     }
 

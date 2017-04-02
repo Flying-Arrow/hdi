@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, OnMapClickListener, OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
@@ -315,6 +316,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     LatLngBounds bounds = googleMap.getProjection().getVisibleRegion().latLngBounds;
                     int k = 0;
                     Cursor mCursor = getContentResolver().query(LocationsContentProvider.CONTENT_URI, mProjection, null, null, null);
+                    Double sum = 0.0;
                     if (mCursor.getCount() > 0) {
                         Double hdi;
                         Double lat, lng;
@@ -323,11 +325,11 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                             lat = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LAT)));
                             lng = Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(LocationsDB.FIELD_LNG)));
                             if (bounds.contains(new LatLng(lat, lng))) {
+                                sum+=hdi;
                                 k++;
                             }
                         }
-                        System.out.println(k + "------------------------------------------");
-                        Toast.makeText(Map.this, "Total markers on screen : " + k, Toast.LENGTH_LONG).show();
+                        Toast.makeText(Map.this, "Average HDI of the region is " + String.valueOf((sum/k)).substring(0,5), Toast.LENGTH_LONG).show();
                     }
                 }
             });

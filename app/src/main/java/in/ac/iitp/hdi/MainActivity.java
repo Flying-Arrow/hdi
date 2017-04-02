@@ -1,7 +1,10 @@
 package in.ac.iitp.hdi;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -55,10 +58,27 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
                 List<String> keys = new ArrayList<String>(td.keySet());
 
                 for (int i = 0; i < Math.min(values.size(), keys.size()); i++) {
-                    String timestamp = keys.get(i);
-                    // double EI, double HI, double II, double latitude, double longitude, String userUID) {
                     HdiDataModel mHdiDataModel = values.get(i);
-                    //Double lat = mHdiDataModel.getLatitude()
+                    String timestamp = keys.get(i);
+                    Double lat = mHdiDataModel.getLatitude();
+                    Double lng = mHdiDataModel.getLongitude();
+                    String u_id = mHdiDataModel.getUserUID();
+                    Double hea = mHdiDataModel.getHI();
+                    Double edu = mHdiDataModel.getEI();
+                    Double inc = mHdiDataModel.getII();
+
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(LocationsDB.FIELD_LAT, lat);
+                    contentValues.put(LocationsDB.FIELD_LNG, lng);
+                    contentValues.put(LocationsDB.FIELD_HDI, Math.cbrt(hea*edu*inc));
+                    contentValues.put(LocationsDB.FIELD_INC, inc);
+                    contentValues.put(LocationsDB.FIELD_HEA, hea);
+                    contentValues.put(LocationsDB.FIELD_EDU, edu);
+                    contentValues.put(LocationsDB.FIELD_TIM, timestamp);
+                    contentValues.put(LocationsDB.FIELD_USER_ID, u_id);
+                    LocationInsertTask insertTask = new LocationInsertTask();
+                    insertTask.execute(contentValues);
+
                 }
             }
 
@@ -105,6 +125,15 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
             }
         });
 
+        findViewById(R.id.startMap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mActivity, Map.class);
+                intent.putExtra("FLAG", "0");
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -147,5 +176,13 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    public class LocationInsertTask extends AsyncTask<ContentValues, Void, Void> {
+        @Override
+        protected Void doInBackground(ContentValues... contentValues) {
+            getContentResolver().insert(LocationsContentProvider.CONTENT_URI, contentValues[0]);
+            return null;
+        }
     }
 }

@@ -85,10 +85,32 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                 List<String> keys = new ArrayList<String>(td.keySet());
 
                 for (int i = 0; i < Math.min(values.size(), keys.size()); i++) {
-                    String timestamp = keys.get(i);
-                    // double EI, double HI, double II, double latitude, double longitude, String userUID) {
                     HdiDataModel mHdiDataModel = values.get(i);
-                    //Double lat = mHdiDataModel.getLatitude()
+                    String timestamp = keys.get(i);
+                    Double lat = mHdiDataModel.getLatitude();
+                    Double lng = mHdiDataModel.getLongitude();
+                    String u_id = mHdiDataModel.getUserUID();
+                    Double hea = mHdiDataModel.getHI();
+                    Double edu = mHdiDataModel.getEI();
+                    Double inc = mHdiDataModel.getII();
+
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(LocationsDB.FIELD_LAT, lat);
+                    contentValues.put(LocationsDB.FIELD_LNG, lng);
+                    contentValues.put(LocationsDB.FIELD_HDI, Math.cbrt(hea*edu*inc));
+                    contentValues.put(LocationsDB.FIELD_INC, inc);
+                    contentValues.put(LocationsDB.FIELD_HEA, hea);
+                    contentValues.put(LocationsDB.FIELD_EDU, edu);
+                    contentValues.put(LocationsDB.FIELD_TIM, timestamp);
+                    contentValues.put(LocationsDB.FIELD_USER_ID, u_id);
+                    LocationInsertTask insertTask = new LocationInsertTask();
+                    insertTask.execute(contentValues);
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    Double hdi = Math.cbrt(hea*edu*inc);
+                    markerOptions.position(new LatLng(lat, lng)).title("HDI : "+hdi.toString().substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+                    googleMap.addMarker(markerOptions);
+
                 }
             }
 
@@ -171,13 +193,13 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
     private void drawMarker(LatLng point, String info) {
         MarkerOptions markerOptions = new MarkerOptions();
         Double hdi = Double.parseDouble(info);
-        markerOptions.position(point).title(info.toString()).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+        markerOptions.position(point).title("HDI : "+info.toString().substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
         googleMap.addMarker(markerOptions);
     }
 
     private void drawMarker(Double lat, Double lng, Double hdi) {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(lat, lng)).title(hdi.toString()).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+        markerOptions.position(new LatLng(lat, lng)).title("HDI : "+hdi.toString().substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
         googleMap.addMarker(markerOptions);
     }
 
@@ -247,7 +269,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     }
 
                     MarkerOptions op = new MarkerOptions();
-                    op.position(new LatLng(x, y)).title(String.valueOf(HDI)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
+                    op.position(new LatLng(x, y)).title("HDI : "+String.valueOf(HDI).substring(0,5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
                     googleMap.addMarker(op);
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, x);

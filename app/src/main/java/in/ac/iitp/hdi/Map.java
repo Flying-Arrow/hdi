@@ -108,7 +108,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
 
                     MarkerOptions markerOptions = new MarkerOptions();
                     Double hdi = Math.cbrt(hea * edu * inc);
-                    markerOptions.position(new LatLng(lat, lng)).title("HDI : " + hdi.toString().substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+                    markerOptions.position(new LatLng(lat, lng)).title("HDI : " + Math.round(hdi * 100D) / 100D).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
                     googleMap.addMarker(markerOptions);
 
                 }
@@ -193,13 +193,13 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
     private void drawMarker(LatLng point, String info) {
         MarkerOptions markerOptions = new MarkerOptions();
         Double hdi = Double.parseDouble(info);
-        markerOptions.position(point).title("HDI : " + info.toString().substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+        markerOptions.position(point).title("HDI : " + Math.round(hdi * 100D) / 100D).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
         googleMap.addMarker(markerOptions);
     }
 
     private void drawMarker(Double lat, Double lng, Double hdi) {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(lat, lng)).title("HDI : " + hdi.toString().substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
+        markerOptions.position(new LatLng(lat, lng)).title("HDI : " + Math.round(hdi * 100D) / 100D).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(hdi)));
         googleMap.addMarker(markerOptions);
     }
 
@@ -269,7 +269,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                     }
 
                     MarkerOptions op = new MarkerOptions();
-                    op.position(new LatLng(x, y)).title("HDI : " + String.valueOf(HDI).substring(0, 5)).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
+                    op.position(new LatLng(x, y)).title("HDI : " + Math.round(HDI * 100D) / 100D).draggable(false).icon(BitmapDescriptorFactory.defaultMarker(getColor(HDI)));
                     googleMap.addMarker(op);
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(LocationsDB.FIELD_LAT, x);
@@ -328,7 +328,7 @@ public class Map extends FragmentActivity implements LoaderCallbacks<Cursor>, On
                                 k++;
                             }
                         }
-                        Toast.makeText(Map.this, "Average HDI of the region is " + String.valueOf((sum / k)).substring(0, 5), Toast.LENGTH_LONG).show();
+                        Toast.makeText(Map.this, "Average HDI of the region is " + String.valueOf(Math.round((sum / k) * 100D) / 100D), Toast.LENGTH_LONG).show();
                     }
                 }
             });

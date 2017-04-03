@@ -8,4 +8,11 @@
         android:orderInCategory="100"
         android:title="Privacy Policy"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_signout"
+        android:focusableInTouchMode="true"
+        android:orderInCategory="100"
+        android:title="Sign out"
+        app:showAsAction="never" />
 </menu>

@@ -53,9 +53,9 @@ public class EduHDI extends ActionBarActivity implements BaseSliderView.OnSlider
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
         file_maps.put("EI1", R.drawable.img9);
-        file_maps.put("EI1", R.drawable.img10);
-        file_maps.put("EI1", R.drawable.img11);
-        file_maps.put("EI1", R.drawable.img12);
+        file_maps.put("EI2", R.drawable.img10);
+        file_maps.put("EI3", R.drawable.img11);
+        file_maps.put("EI4", R.drawable.img12);
 
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);
